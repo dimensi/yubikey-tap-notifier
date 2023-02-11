@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		EE0F37622997CA1700D31C4D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0F37612997CA1700D31C4D /* AppDelegate.swift */; };
-		EE0F37642997CA1700D31C4D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0F37632997CA1700D31C4D /* ViewController.swift */; };
 		EE0F37662997CA1800D31C4D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EE0F37652997CA1800D31C4D /* Assets.xcassets */; };
 		EE0F37692997CA1800D31C4D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE0F37672997CA1800D31C4D /* Main.storyboard */; };
 /* End PBXBuildFile section */
@@ -16,7 +15,6 @@
 /* Begin PBXFileReference section */
 		EE0F375E2997CA1700D31C4D /* YubiKey Tap Notifier.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "YubiKey Tap Notifier.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE0F37612997CA1700D31C4D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		EE0F37632997CA1700D31C4D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		EE0F37652997CA1800D31C4D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EE0F37682997CA1800D31C4D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EE0F376A2997CA1800D31C4D /* YubiKey_Tap_Notifier.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = YubiKey_Tap_Notifier.entitlements; sourceTree = "<group>"; };
@@ -53,7 +51,6 @@
 			isa = PBXGroup;
 			children = (
 				EE0F37612997CA1700D31C4D /* AppDelegate.swift */,
-				EE0F37632997CA1700D31C4D /* ViewController.swift */,
 				EE0F37652997CA1800D31C4D /* Assets.xcassets */,
 				EE0F37672997CA1800D31C4D /* Main.storyboard */,
 				EE0F376A2997CA1800D31C4D /* YubiKey_Tap_Notifier.entitlements */,
@@ -131,7 +128,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EE0F37642997CA1700D31C4D /* ViewController.swift in Sources */,
 				EE0F37622997CA1700D31C4D /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -273,6 +269,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
@@ -298,6 +295,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
