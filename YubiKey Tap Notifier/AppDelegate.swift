@@ -52,45 +52,39 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var checkTime = ""
     
     var isExecutionInProgress = false
-
+    
     func checkForYubiKeyTap() {
         if isExecutionInProgress {
             return
         }
         
         isExecutionInProgress = true
-        
-        let group = DispatchGroup()
-        group.enter()
-        
-        let timeoutWork = DispatchWorkItem {
-            self.displayNotification()
-            DispatchQueue.main.async {
-                self.statusItem.button?.image = self.touchImage
-            }
-        }
-        
-        DispatchQueue.global().asyncAfter(deadline: .now() + 0.3, execute: timeoutWork)
+        let semaphore = DispatchSemaphore(value: 0)
+        let deadline = DispatchTime.now() + 0.3
         
         DispatchQueue.global().async {
             do {
                 try self.exec()
                 self.printCheck()
+                semaphore.signal()
+                self.isExecutionInProgress = false
+                DispatchQueue.main.async {
+                    self.statusItem.button?.image = self.defaultImage
+                }
             } catch let error as NSError {
                 print("Error: \(error)")
+                semaphore.signal()
             }
-            group.leave()
         }
         
-        group.notify(queue: .global()) {
-            timeoutWork.cancel()
-            self.isExecutionInProgress = false
+        if semaphore.wait(timeout: deadline) == .timedOut {
+            self.displayNotification()
             DispatchQueue.main.async {
-                self.statusItem.button?.image = self.defaultImage
+                self.statusItem.button?.image = self.touchImage
             }
-            
         }
     }
+
     
     func printCheck() {
         let dateFormatter = DateFormatter()
