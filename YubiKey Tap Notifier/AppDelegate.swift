@@ -14,17 +14,27 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
     let checkTimeItem = NSMenuItem(title: "Check Time: ", action: nil, keyEquivalent: "")
-    let defaultImage = NSImage(named: "StatusIconDefault")
-    let activeImage = NSImage(named: "StatusIconActive")
-    let touchImage = NSImage(named: "StatusIconTouch")
+    var defaultImage: NSImage {
+        NSImage(named: "status_icon_default")!
+    }
+    var activeImage: NSImage {
+        NSImage(named: "status_icon_active")!
+    }
+    var touchImage: NSImage {
+        NSImage(named: "status_icon_touch")!
+    }
+    let center = UNUserNotificationCenter.current()
+    let title = "YubiKey Tap Notifier"
+    let desc = "Please tap the YubiKey"
+    var checkTime = "Didn't check"
+    var timer: Timer?
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Set the status item's button image
         if let button = statusItem.button {
             button.image = defaultImage
         }
-        
-        // Create a menu for the status item
+
         let menu = NSMenu()
         menu.addItem(checkTimeItem)
         menu.addItem(withTitle: "Quit", action: #selector(quit), keyEquivalent: "q")
@@ -42,23 +52,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         print("ask grand")
         askGrand()
         print("start timer")
-        Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { timer in
-            self.checkForYubiKeyTap()
-        })
+        checkForYubiKeyTap()
     }
     
-    let title = "YubiKey Tap Notifier"
-    let desc = "Please tap the YubiKey"
-    var checkTime = ""
-    
-    var isExecutionInProgress = false
-    
-    func checkForYubiKeyTap() {
-        if isExecutionInProgress {
-            return
+    @objc func checkForYubiKeyTap() {
+        print("enter check")
+        if (timer != nil) {
+            timer = nil
         }
         
-        isExecutionInProgress = true
         let semaphore = DispatchSemaphore(value: 0)
         let deadline = DispatchTime.now() + 0.3
         
@@ -67,9 +69,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 try self.exec()
                 self.printCheck()
                 semaphore.signal()
-                self.isExecutionInProgress = false
                 DispatchQueue.main.async {
                     self.statusItem.button?.image = self.defaultImage
+                    self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(Self.checkForYubiKeyTap), userInfo: nil, repeats: false)
                 }
             } catch let error as NSError {
                 print("Error: \(error)")
@@ -78,9 +80,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         
         if semaphore.wait(timeout: deadline) == .timedOut {
-            self.displayNotification()
             DispatchQueue.main.async {
                 self.statusItem.button?.image = self.touchImage
+                self.displayNotification()
             }
         }
     }
@@ -90,7 +92,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH:mm:ss"
         let dateString = dateFormatter.string(from: Date())
-        checkTimeItem.title = "Last check: \(dateString)"
+        checkTime = "Last check: \(dateString)"
     }
     
     func exec() throws {
@@ -106,7 +108,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         task.waitUntilExit()
     }
     
-    let center = UNUserNotificationCenter.current()
+
     func askGrand() {
         let options: UNAuthorizationOptions = [.alert, .sound]
         
@@ -133,16 +135,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         
     }
-    
-    func applicationWillTerminate(_ aNotification: Notification) {
-        // Insert code here to tear down your application
-    }
-
-    func applicationSupportsSecureRestorableState(_ app: NSApplication) -> Bool {
-        return true
-    }
-
-
 }
 
 extension AppDelegate: NSMenuDelegate {
@@ -150,6 +142,7 @@ extension AppDelegate: NSMenuDelegate {
         if let button = statusItem.button {
             button.image = activeImage
         }
+        checkTimeItem.title = checkTime
     }
     
     func menuDidClose(_ menu: NSMenu) {
