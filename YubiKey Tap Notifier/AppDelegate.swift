@@ -40,7 +40,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         menu.addItem(withTitle: "Quit", action: #selector(quit), keyEquivalent: "q")
         menu.delegate = self
         statusItem.menu = menu
-        
         runBackgroundCode()
     }
 
@@ -70,6 +69,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 DispatchQueue.main.async {
                     self.statusItem.button?.image = self.defaultImage
                     self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(Self.checkForYubiKeyTap), userInfo: nil, repeats: false)
+                    self.center.removeAllDeliveredNotifications()
                 }
             } catch let error as NSError {
                 print("Error: \(error)")
