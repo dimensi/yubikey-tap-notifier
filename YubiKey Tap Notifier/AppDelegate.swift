@@ -56,7 +56,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     @objc func checkForYubiKeyTap() {
-        print("enter check")
         if (timer != nil) {
             timer = nil
         }
