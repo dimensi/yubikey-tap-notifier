@@ -61,7 +61,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         
         let semaphore = DispatchSemaphore(value: 0)
-        let deadline = DispatchTime.now() + 0.3
         
         DispatchQueue.global().async {
             do {
@@ -78,7 +77,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
         }
         
-        if semaphore.wait(timeout: deadline) == .timedOut {
+        if semaphore.wait(timeout: .now() + 0.3) == .timedOut {
             DispatchQueue.main.async {
                 self.statusItem.button?.image = self.touchImage
                 self.displayNotification()
