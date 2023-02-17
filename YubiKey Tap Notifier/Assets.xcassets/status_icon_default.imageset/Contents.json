@@ -1,12 +1,34 @@
 {
   "images" : [
     {
-      "filename" : "statusIconDefault-16x16 1.png",
+      "filename" : "default-512x512.png",
       "idiom" : "mac",
       "scale" : "1x"
     },
     {
-      "filename" : "statusIconDefault-16x16@2x 1.png",
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "statusIconDefault-16x16 2.png",
+      "idiom" : "mac",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "default-512x512@2x.png",
+      "idiom" : "mac",
+      "scale" : "2x"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "statusIconDefault-16x16@2x 2.png",
       "idiom" : "mac",
       "scale" : "2x"
     }

@@ -1,12 +1,34 @@
 {
   "images" : [
     {
-      "filename" : "statusIconTouch-16x16.png",
+      "filename" : "touch-512x512.png",
       "idiom" : "mac",
       "scale" : "1x"
     },
     {
-      "filename" : "statusIconTouch-16x16@2x.png",
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "statusIconTouch-16x16 1.png",
+      "idiom" : "mac",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "touch-512x512@2x.png",
+      "idiom" : "mac",
+      "scale" : "2x"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "statusIconTouch-16x16@2x 1.png",
       "idiom" : "mac",
       "scale" : "2x"
     }
